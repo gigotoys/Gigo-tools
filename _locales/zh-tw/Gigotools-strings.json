@@ -34,7 +34,7 @@
     "Gigotools.ColorSensorRecord|block": "顏色感測器紀錄 %colorpart |數值",
     "Gigotools.ReadColorEqual|block": "讀取顏色等於 %colorpart",
     "{id:group}Motor": "馬達",
-    "{id:group}Ultrasound": "超音波",
+    "{id:group}Ultrasonic Sensor": "超音波感測器",
     "{id:group}Color Sensor": "顏色感測器"
 
 }
