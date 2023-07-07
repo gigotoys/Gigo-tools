@@ -137,12 +137,12 @@ namespace Gigotools {
     //% blockSetVariable=RGBLED
     //% subcategory="Add on pack"
     //% group="RGB LED"
-    export function createZIPHaloDisplay(pin: DigitalPin): HaloHd {
+    export function RGBLED_create(pin: DigitalPin): HaloHd {
         let RGBLED = new HaloHd();
         RGBLED.buf = pins.createBuffer(1 * 3);
         RGBLED.start = 0;
         RGBLED._length = 1;/*LED數量*/ 
-        RGBLED.setBrightness(128)
+        RGBLED.RGBLED_set_brightness(128)
         RGBLED.pin = pin;
         pins.digitalWritePin(RGBLED.pin ,pin);
         return RGBLED;
@@ -166,7 +166,7 @@ namespace Gigotools {
          //% group="RGB LED"
         //% blockId="RGBLED_set_color" block="%RGBLED|show color %rgb=RGBLED_colors" 
         //% weight=99 blockGap=8
-        showColor(rgb: number) {
+        RGBLED_set_color(rgb: number) {
             rgb = rgb >> 0;
             this.setAllRGB(rgb);
             this.show();
@@ -209,7 +209,7 @@ namespace Gigotools {
         //% blockId="RGBLED_set_brightness" block="%RGBLED|set brightness %brightness" blockGap=8
         //% weight=92
         //% brightness.min=0 brightness.max=255
-        setBrightness(brightness: number): void {
+        RGBLED_set_brightness(brightness: number): void {
             //Clamp incoming variable at 0-255 as values out of this range cause unexpected brightnesses as the lower level code only expects a byte.
             if (brightness < 0) {
                 brightness = 0
@@ -331,7 +331,7 @@ namespace Gigotools {
     //% subcategory="Add on pack"
     //% group="RGB LED"
     //% weight=1 blockGap=8
-    //% blockId="RGBLED_rgb" block="red %red|green %green|blue %blue"
+    //% blockId="rgb" block="red %red|green %green|blue %blue"
     export function rgb(red: number, green: number, blue: number): number {
         return packRGB(red, green, blue);
     }
