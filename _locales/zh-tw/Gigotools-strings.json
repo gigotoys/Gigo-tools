@@ -6,7 +6,7 @@
     "Gigotools.RGBLED_create|block":"腳位 %pin|",
     "Gigotools.RGBLED_set_color|block":"%RGBLED|呈現顏色 %rgb=RGBLED_colors",
     "Gigotools.RGBLED_set_brightness|block":"%RGBLED|設定亮度 %brightness",
-    "Gigotools.RGBLED_rgb|block":"紅色 %red|綠色 %green|藍色 %blue",
+    "Gigotools.rgb|block":"紅色 %red|綠色 %green|藍色 %blue",
     "RGBLedColors.Off|block":"關閉",
     "RGBLedColors.Red|block":"紅光",
     "RGBLedColors.Orange|block":"橘光",
