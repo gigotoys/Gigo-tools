@@ -1,5 +1,5 @@
 // 在這裡添加你的程式
-//% weight=0 color=#3CB371 icon="\uf2db" block="Gigotools" groups='["Motor", "Ultrasound", "RGB LED", "Color Sensor"]'
+//% weight=0 color=#3CB371 icon="\uf2db" block="gigotools" groups='["Motor", "Ultrasound", "RGB LED", "Color Sensor"]'
 enum PingUnit {
     //% block="cm"
     Centimeters, 
