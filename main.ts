@@ -164,7 +164,7 @@ namespace Gigotools {
          */
         //% subcategory="Add on pack"
          //% group="RGB LED"
-        //% blockId="RGBLED_set_color" block="%RGBLED|show color %rgb=RGBLED_colors" 
+        //% block="%RGBLED|show color %rgb=RGBLED_colors" 
         //% weight=99 blockGap=8
         RGBLED_set_color(rgb: number) {
             rgb = rgb >> 0;
@@ -206,7 +206,7 @@ namespace Gigotools {
          */
         //% subcategory="Add on pack"
         //% group="RGB LED"
-        //% blockId="RGBLED_set_brightness" block="%RGBLED|set brightness %brightness" blockGap=8
+        //% block="%RGBLED|set brightness %brightness" blockGap=8
         //% weight=92
         //% brightness.min=0 brightness.max=255
         RGBLED_set_brightness(brightness: number): void {
