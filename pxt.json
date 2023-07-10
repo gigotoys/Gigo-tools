@@ -3,6 +3,7 @@
     "name": "Gigotools",
     "version": "0.0.0",
     "description": "智高提供的積木方塊。Blocks provided by Gigo。",
+     "icon": "https://github.com/gigotoys/Gigo-tools/blob/main/icon/230707.PNG",
     "license": "MIT",
     "dependencies": {
         "core": "*"
