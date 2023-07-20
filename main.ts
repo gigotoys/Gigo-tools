@@ -67,6 +67,7 @@ namespace Gigotools {
             case 2:
                 pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 255, 0, 1023));
                 pins.digitalWritePin(DigitalPin.P13, pins.map(McontrolValue, 0, 1, 0, 1));
+                break;
             case 3:
                 pins.analogWritePin(AnalogPin.P14, pins.map(MSpeedValue, 0, 255, 0, 1023));
                 pins.digitalWritePin(DigitalPin.P15, pins.map(McontrolValue, 0, 1, 0, 1));
