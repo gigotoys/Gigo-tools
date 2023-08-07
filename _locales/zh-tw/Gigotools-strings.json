@@ -3,7 +3,7 @@
     "Gigotools|block": "Gigotools",
     "{id:category}Gigotools": "智高工具",
     "Gigotools.DDMmotor|block":"速度腳位選擇 %MSpeedPin|速度值選定(0~255) %MSpeedValue|控制腳位選擇 %McontrolPin|馬達方向控制(0~1) %McontrolValue",
-    "Gigotools.DDMmotor2|block":"馬達通道 %MotorPin|速度值選定(0~255) %MSpeedValue|馬達方向控制(0~1) %McontrolValue",
+    "Gigotools.DDMmotor2|block":"馬達通道 %MotorPin|速度值選定(0~100) %MSpeedValue|馬達方向控制(0~1) %McontrolValue",
     "Gigotools.ping|block":"觸發腳位 %trig|回饋腳位 %echo|單位 %unit",
     "Gigotools.RGBLED_create|block":"腳位 %pin|",
     "Gigotools.HaloHd.RGBLED_set_color|block":"%RGBLED|呈現顏色 %rgb=RGBLED_colors",
