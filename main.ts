@@ -53,7 +53,7 @@ namespace Gigotools {
    D(16,0)
    I2C(20,19)
    */
-    //% blockId=DDMmotor2 block="Motor Channel %MotorPin|speed of MSpeed(0~255) %MSpeedValue|direction of Mcontrol(0~1) %McontrolValue" blockExternalInputs=false
+    //% blockId=DDMmotor2 block="Motor Channel %MotorPin|speed of MSpeed(0~100) %MSpeedValue|direction of Mcontrol(0~1) %McontrolValue" blockExternalInputs=false
     //% McontrolValue.min=0 McontrolValue.max=1 
     //% MSpeedValue.min=0 MSpeedValue.max=255   
     //% group="Motor"
@@ -61,19 +61,19 @@ namespace Gigotools {
 
         switch (MotorPin) {
             case 1:
-                pins.analogWritePin(AnalogPin.P1, pins.map(MSpeedValue, 0, 255, 0, 1023));
+                pins.analogWritePin(AnalogPin.P1, pins.map(MSpeedValue, 0, 100, 0, 1000));
                 pins.digitalWritePin(DigitalPin.P2, pins.map(McontrolValue, 0, 1, 0, 1));
                 break;
             case 2:
-                pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 255, 0, 1023));
+                pins.analogWritePin(AnalogPin.P8, pins.map(MSpeedValue, 0, 100, 0, 1000));
                 pins.digitalWritePin(DigitalPin.P13, pins.map(McontrolValue, 0, 1, 0, 1));
                 break;
             case 3:
-                pins.analogWritePin(AnalogPin.P14, pins.map(MSpeedValue, 0, 255, 0, 1023));
+                pins.analogWritePin(AnalogPin.P14, pins.map(MSpeedValue, 0, 100, 0, 1000));
                 pins.digitalWritePin(DigitalPin.P15, pins.map(McontrolValue, 0, 1, 0, 1));
                 break;
             case 4:
-                pins.analogWritePin(AnalogPin.P16, pins.map(MSpeedValue, 0, 255, 0, 1023));
+                pins.analogWritePin(AnalogPin.P16, pins.map(MSpeedValue, 0, 100, 0, 1000));
                 pins.digitalWritePin(DigitalPin.P0, pins.map(McontrolValue, 0, 1, 0, 1));
                 break;
 
