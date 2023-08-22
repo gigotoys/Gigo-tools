@@ -12,6 +12,7 @@
     "files": [
         "README.md",
         "main.ts",
+        "_locales/en/Gigotools-strings.json",
        "_locales/zh-tw/Gigotools-strings.json",
        "_locales/le/Gigotools-strings.json",
        "_locales/zh-cn/Gigotools-strings.json"
