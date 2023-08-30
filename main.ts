@@ -55,7 +55,7 @@ namespace Gigotools {
    */
     //% blockId=DDMmotor2 block="Motor Channel %MotorPin|speed of MSpeed(0~100) %MSpeedValue|direction of Mcontrol(0~1) %McontrolValue" blockExternalInputs=false
     //% McontrolValue.min=0 McontrolValue.max=1 
-    //% MSpeedValue.min=0 MSpeedValue.max=255   
+    //% MSpeedValue.min=0 MSpeedValue.max=100   
     //% group="Motor"
     export function DDMmotor2(MotorPin: MotorChannel, MSpeedValue: number, McontrolValue: number): void {
 
@@ -90,7 +90,7 @@ namespace Gigotools {
     //% McontrolPin.fieldOptions.tooltips="false" McontrolPin.fieldOptions.width="300"
     //% group="Motor"
     export function DDMmotor(MSpeedPin: AnalogPin, MSpeedValue: number, McontrolPin: DigitalPin, McontrolValue: number): void {
-        pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1023));
+        pins.analogWritePin(MSpeedPin, pins.map(MSpeedValue, 0, 255, 0, 1020));
         pins.digitalWritePin(McontrolPin, pins.map(McontrolValue, 0, 1, 0, 1));
 
     }
