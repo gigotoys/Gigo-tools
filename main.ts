@@ -53,7 +53,7 @@ namespace Gigotools {
    D(16,0)
    I2C(20,19)
    */
-    //% blockId=DDMmotor2 block="Motor Channel %MotorPin|speed of MSpeed(0~100) %MSpeedValue|direction of Mcontrol(0~1) %McontrolValue" blockExternalInputs=false
+    //% blockId=DDMmotor2 block="motor channel %MotorPin|speed (0~100) %MSpeedValue|rotation direction(0~1) %McontrolValue" blockExternalInputs=false
     //% McontrolValue.min=0 McontrolValue.max=1 
     //% MSpeedValue.min=0 MSpeedValue.max=100   
     //% group="Motor"
@@ -81,7 +81,7 @@ namespace Gigotools {
     }
   /**馬達腳位自行宣告
     */
-    //% blockId=DDMmotor block="MSpeed pin %MSpeedPin|speed of MSpeed(0~255) %MSpeedValue|Mcontrol pin %McontrolPin|direction of Mcontrol(0~1) %McontrolValue" blockExternalInputs=false
+    //% blockId=DDMmotor block="speed pin %MSpeedPin|speed of MSpeed(0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue" blockExternalInputs=false
     //% McontrolValue.min=0 McontrolValue.max=1 
     //% MSpeedValue.min=0 MSpeedValue.max=255   
     //% MSpeedPin.fieldEditor="gridpicker" MSpeedPin.fieldOptions.columns=4
@@ -431,7 +431,7 @@ namespace Gigotools {
     */
     let nowReadColor = [0, 0, 0]
     //% weight=12
-    //% block="color Sensor read color"
+    //% block="color sensor read color"
     //% subcategory="Add on pack"
      //% group="Color Sensor"
     export function ColorSensorReadColor(): void {
@@ -573,7 +573,7 @@ namespace Gigotools {
      let colorright = false
     let forkrange = 10
     //% weight=12
-    //% block="read color equal  to %colorpart |"
+    //% block="read color equal to %colorpart |"
     //% subcategory="Add on pack"
      //% group="Color Sensor"
     export function ReadColorEqual(colorpart: ColorPart = 1): boolean {
