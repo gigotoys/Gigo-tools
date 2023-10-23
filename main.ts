@@ -431,7 +431,7 @@ namespace Gigotools {
     */
     let nowReadColor = [0, 0, 0]
     //% weight=12
-    //% block="Color Sensor read color"
+    //% block="color Sensor read color"
     //% subcategory="Add on pack"
      //% group="Color Sensor"
     export function ColorSensorReadColor(): void {
