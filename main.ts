@@ -420,7 +420,7 @@ namespace Gigotools {
     //          顏色感測器        //
     ////////////////////////////////
     //% weight=12
-    //% block="Color Sensor init"
+    //% block="color sensor initialization"
     //% subcategory="Add on pack" 
     //% group="Color Sensor"
     export function ColorSensorinit(): void {
@@ -461,7 +461,7 @@ namespace Gigotools {
         Blue = 3
     }
     //% weight=12
-    //% block="Color Sensor read RGB %channel |channel"
+    //% block="color sensor read RGB %channel |channel"
      //% subcategory="Add on pack"
       //% group="Color Sensor"
     export function ColorSensorRead(channel: Channel = 1): number {
@@ -523,7 +523,7 @@ namespace Gigotools {
     let ReadCustom3Color = [0, 0, 0]
 
     //% weight=12
-    //% block="Color Sensor record %colorpart |color"
+    //% block="color sensor record %colorpart |"
     //% subcategory="Add on pack"
      //% group="Color Sensor"
     export function ColorSensorRecord(colorpart: ColorPart = 1): void {
@@ -573,7 +573,7 @@ namespace Gigotools {
      let colorright = false
     let forkrange = 10
     //% weight=12
-    //% block="Read color equal %colorpart |color?"
+    //% block="read color equal  to %colorpart |"
     //% subcategory="Add on pack"
      //% group="Color Sensor"
     export function ReadColorEqual(colorpart: ColorPart = 1): boolean {
