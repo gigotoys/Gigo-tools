@@ -500,23 +500,20 @@ namespace Gigotools {
         Blue = 3,
         //% block="Yellow"
         Yellow = 4,
-        //% block="Azure"
-        Azure = 5,
         //% block="Purple"
-        Purple = 6,
+        Purple = 5,
         //% block="Custom1"
-        Custom1 = 7,
+        Custom1 = 6,
         //% block="Custom2"
-        Custom2 = 8,
+        Custom2 = 7,
         //% block="Custom3"
-        Custom3 = 9
+        Custom3 = 8
     }
 
     let ReadRedColor = [74, 93, 74]
     let ReadGreenColor = [51, 113, 81]
     let ReadBlueColor = [50, 114, 114]
     let ReadYellowColor = [126, 182, 96]
-    let ReadAzureColor = [0, 0, 0]
     let ReadPurpleColor = [52, 93, 84]
     let ReadCustom1Color = [0, 0, 0]
     let ReadCustom2Color = [0, 0, 0]
@@ -554,18 +551,15 @@ namespace Gigotools {
                 ReadYellowColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
                 break;
             case 5:
-                ReadAzureColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
-                break;
-            case 6:
                 ReadPurpleColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
                 break;
-            case 7:
+            case 6:
                 ReadCustom1Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
                 break;
-            case 8:
+            case 7:
                 ReadCustom2Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
                 break;
-            case 9:
+            case 8:
                 ReadCustom3Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
                 break;
         }
@@ -610,15 +604,8 @@ namespace Gigotools {
                     colorright = false
                 }
                 break;
+          
             case 5:
-                if ((Math.abs(ReadAzureColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadAzureColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadAzureColor[2] - nowReadColor[2]) < forkrange)) {
-                    colorright = true
-                }
-                else {
-                    colorright = false
-                }
-                break;
-            case 6:
                 if ((Math.abs(ReadPurpleColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadPurpleColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadPurpleColor[2] - nowReadColor[2]) < forkrange)) {
                     colorright = true
                 }
@@ -626,7 +613,7 @@ namespace Gigotools {
                     colorright = false
                 }
                 break;
-            case 7:
+            case 6:
                 if ((Math.abs(ReadCustom1Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadCustom1Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadCustom1Color[2] - nowReadColor[2]) < forkrange)) {
                     colorright = true
                 }
@@ -634,7 +621,7 @@ namespace Gigotools {
                     colorright = false
                 }
                 break;
-            case 8:
+            case 7:
                 if ((Math.abs(ReadCustom2Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadCustom2Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadCustom2Color[2] - nowReadColor[2]) < forkrange)) {
                     colorright = true
                 }
@@ -642,7 +629,7 @@ namespace Gigotools {
                     colorright = false
                 }
                 break;
-            case 9:
+            case 8:
                 if ((Math.abs(ReadCustom3Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadCustom3Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadCustom3Color[2] - nowReadColor[2]) < forkrange)) {
                     colorright = true
                 }
