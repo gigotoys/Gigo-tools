@@ -497,7 +497,6 @@ namespace Gigotools {
       //% group="Color Sensor"
     export function ColorSensorRead(channel: Channel = 1): number {
         let ra: number, ga: number, ba: number; // 在函數的最上方宣告變數
-        whiteBalanceCompensation();
         pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
 
         pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
@@ -512,7 +511,7 @@ namespace Gigotools {
         let RdCl = 0
         switch (channel) {
             case 1:
-                RdCl = Math.round(Math.map(TCS_RED*ra, 0, 65535, 0, 255))
+                RdCl = Math.round(Math.map(TCS_RED*5, 0, 65535, 0, 255))
                 break;
             case 2:
                 RdCl = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
