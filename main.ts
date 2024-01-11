@@ -427,9 +427,13 @@ namespace Gigotools {
         pins.i2cWriteNumber(41, 33276, NumberFormat.UInt16BE, false)
         pins.i2cWriteNumber(41, 32771, NumberFormat.UInt16BE, false)
          // 呼叫白平衡补偿函数
-        whiteBalanceCompensation();
+        
     }
-    function whiteBalanceCompensation(): void {
+     //% weight=12
+    //% block="init"
+    //% subcategory="Add on pack" 
+    //% group="Color Sensor"
+   export function whiteBalanceCompensation(): void {
         pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
         pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
         
