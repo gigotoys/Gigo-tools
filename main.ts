@@ -464,7 +464,7 @@ namespace Gigotools {
     //% subcategory="Add on pack"
      //% group="Color Sensor"
     export function ColorSensorReadColor(): void {
-        let ra: number, ga: number, ba: number; // 在函數的最上方宣告變數
+       
         pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
 
         pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
