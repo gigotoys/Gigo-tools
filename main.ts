@@ -450,9 +450,9 @@ namespace Gigotools {
         TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
         TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
 
-    let ra: number = 255.0 / TCS_RED;   // R 补偿系数
-    let ga: number = 255.0 / TCS_GREEN; // G 补偿系数
-    let ba: number = 255.0 / TCS_BLUE;  // B 补偿系数
+    let ra = 255.0 / TCS_RED;   // R 补偿系数
+    let ga = 255.0 / TCS_GREEN; // G 补偿系数
+    let ba = 255.0 / TCS_BLUE;  // B 补偿系数
 
     // 在這裡進行白平衡補償
 }
@@ -478,11 +478,8 @@ namespace Gigotools {
         TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
         TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
         TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
-        nowReadColor = [
-    Math.round(Math.map(TCS_RED * ra, 0, 65535, 0, 255)),
-    Math.round(Math.map(TCS_GREEN * ga, 0, 65535, 0, 255)),
-    Math.round(Math.map(TCS_BLUE * ba, 0, 65535, 0, 255))
-];
+        nowReadColor = [TCS_RED,TCS_GREEN,TCS_BLUE ];
+
     }
     /**
    */
@@ -514,8 +511,7 @@ namespace Gigotools {
         let RdCl = 0
         switch (channel) {
             case 1:
-                 let REDTCS: number = TCS_RED * ra;
-                RdCl = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
+                RdCl = Math.round(Math.map(TCS_RED*ra, 0, 65535, 0, 255))
                 break;
             case 2:
                 RdCl = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
