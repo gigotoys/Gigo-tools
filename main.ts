@@ -478,10 +478,10 @@ namespace Gigotools {
         TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
         TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
         TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
-        let RED: number = TCS_RED * ra;
+        let REDTCS: number = TCS_RED * ra;
          TCS_GREEN *= ga;
          TCS_BLUE *= ba;
-        nowReadColor = [RED, TCS_GREEN, TCS_BLUE]
+        nowReadColor = [REDTCS, TCS_GREEN, TCS_BLUE]
     }
     /**
    */
