@@ -478,10 +478,7 @@ namespace Gigotools {
         TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
         TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
         TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
-        let REDTCS: number = TCS_RED * ra;
-         TCS_GREEN *= ga;
-         TCS_BLUE *= ba;
-        nowReadColor = [REDTCS, TCS_GREEN, TCS_BLUE]
+        nowReadColor = [TCS_RED* ra, TCS_GREEN*ga, TCS_BLUE*ba]
     }
     /**
    */
@@ -498,6 +495,7 @@ namespace Gigotools {
      //% subcategory="Add on pack"
       //% group="Color Sensor"
     export function ColorSensorRead(channel: Channel = 1): number {
+        let ra: number, ga: number, ba: number; // 在函數的最上方宣告變數
         pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
 
         pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
@@ -512,7 +510,8 @@ namespace Gigotools {
         let RdCl = 0
         switch (channel) {
             case 1:
-                RdCl = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
+                 let REDTCS: number = TCS_RED * ra;
+                RdCl = Math.round(Math.map(TCS_RED* ra, 0, 65535, 0, 255))
                 break;
             case 2:
                 RdCl = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
