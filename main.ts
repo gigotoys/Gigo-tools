@@ -478,7 +478,11 @@ namespace Gigotools {
         TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
         TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
         TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
-        nowReadColor = [TCS_RED* ra, TCS_GREEN*ga, TCS_BLUE*ba]
+        nowReadColor = [
+    Math.round(Math.map(TCS_RED * ra, 0, 65535, 0, 255)),
+    Math.round(Math.map(TCS_GREEN * ga, 0, 65535, 0, 255)),
+    Math.round(Math.map(TCS_BLUE * ba, 0, 65535, 0, 255))
+];
     }
     /**
    */
@@ -511,7 +515,7 @@ namespace Gigotools {
         switch (channel) {
             case 1:
                  let REDTCS: number = TCS_RED * ra;
-                RdCl = Math.round(Math.map(TCS_RED* ra, 0, 65535, 0, 255))
+                RdCl = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
                 break;
             case 2:
                 RdCl = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
