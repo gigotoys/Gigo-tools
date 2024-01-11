@@ -420,13 +420,38 @@ namespace Gigotools {
     //          顏色感測器        //
     ////////////////////////////////
     //% weight=12
-    //% block="color sensor initialization"
+    //% block="initialize color sensor"
     //% subcategory="Add on pack" 
     //% group="Color Sensor"
     export function ColorSensorinit(): void {
         pins.i2cWriteNumber(41, 33276, NumberFormat.UInt16BE, false)
         pins.i2cWriteNumber(41, 32771, NumberFormat.UInt16BE, false)
+         // 呼叫白平衡补偿函数
+        whiteBalanceCompensation();
     }
+    function whiteBalanceCompensation(): void {
+        pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
+        pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
+        
+        pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true)
+        let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
+        
+        pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true)
+        let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
+        
+        pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true)
+        let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
+
+        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
+        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
+        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
+
+    let ra: number = 255.0 / TCS_RED;   // R 补偿系数
+    let ga: number = 255.0 / TCS_GREEN; // G 补偿系数
+    let ba: number = 255.0 / TCS_BLUE;  // B 补偿系数
+
+    // 在這裡進行白平衡補償
+}
     /**
     */
     let nowReadColor = [0, 0, 0]
@@ -435,6 +460,7 @@ namespace Gigotools {
     //% subcategory="Add on pack"
      //% group="Color Sensor"
     export function ColorSensorReadColor(): void {
+        let ra: number, ga: number, ba: number; // 在函數的最上方宣告變數
         pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
 
         pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
@@ -448,6 +474,9 @@ namespace Gigotools {
         TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
         TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
         TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
+         TCS_RED *= ra;
+         TCS_GREEN *= ga;
+         TCS_BLUE *= ba;
         nowReadColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
     }
     /**
