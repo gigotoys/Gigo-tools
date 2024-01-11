@@ -426,34 +426,7 @@ namespace Gigotools {
     export function ColorSensorinit(): void {
         pins.i2cWriteNumber(41, 33276, NumberFormat.UInt16BE, false)
         pins.i2cWriteNumber(41, 32771, NumberFormat.UInt16BE, false)
-         // 呼叫白平衡补偿函数
-        
     }
- 
-  function whiteBalanceCompensation(): [number, number, number] {
-    pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
-    pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
-    
-    pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true)
-    let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-    
-    pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true)
-    let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-    
-    pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true)
-    let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-
-    TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
-    TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
-    TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
-
-    let ra: number = 255.0 / TCS_RED;   // R 补偿系数
-    let ga: number = 255.0 / TCS_GREEN; // G 补偿系数
-    let ba: number = 255.0 / TCS_BLUE;  // B 补偿系数
-
-    // 返回白平衡補償系數
-    return [ra, ga, ba];
-}
     /**
     */
     let nowReadColor = [0, 0, 0]
@@ -462,31 +435,21 @@ namespace Gigotools {
     //% subcategory="Add on pack"
      //% group="Color Sensor"
     export function ColorSensorReadColor(): void {
-    let [ra, ga, ba] = whiteBalanceCompensation(); // 呼叫白平衡補償函數
+        pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
 
-    pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
-    pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
-    pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true)
+        pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
 
-    let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-
-    pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true)
-    let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-
-    pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true)
-    let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-
-    TCS_RED *= ra;
-    TCS_GREEN *= ga;
-    TCS_BLUE *= ba;
-
-    TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
-    TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
-    TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
-
-    nowReadColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
-}
-
+        pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true)
+        let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
+        pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true)
+        let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
+        pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true)
+        let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
+        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
+        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
+        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
+        nowReadColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+    }
     /**
    */
     export enum Channel {
@@ -502,7 +465,6 @@ namespace Gigotools {
      //% subcategory="Add on pack"
       //% group="Color Sensor"
     export function ColorSensorRead(channel: Channel = 1): number {
-        let [ra, ga, ba] = whiteBalanceCompensation(); // 呼叫白平衡補償函數
         pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
 
         pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
@@ -513,9 +475,7 @@ namespace Gigotools {
         let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
         pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true)
         let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-       TCS_RED *= ra;
-      TCS_GREEN *= ga;
-      TCS_BLUE *= ba;
+
         let RdCl = 0
         switch (channel) {
             case 1:
