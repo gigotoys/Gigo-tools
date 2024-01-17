@@ -510,11 +510,11 @@ namespace Gigotools {
         Custom3 = 8
     }
 
-    let ReadRedColor = [128, 140, 135]
-    let ReadGreenColor = [105, 152, 139]
-    let ReadBlueColor = [103, 148, 151]
-    let ReadYellowColor = [158, 174, 146]
-    let ReadPurpleColor = [110, 141, 142]
+    let ReadRedColor = [165, 148, 135]
+    let ReadGreenColor = [132, 158, 136]
+    let ReadBlueColor = [130, 154, 145]
+    let ReadYellowColor = [201, 181, 147]
+    let ReadPurpleColor = [139, 148, 138]
     let ReadCustom1Color = [0, 0, 0]
     let ReadCustom2Color = [0, 0, 0]
     let ReadCustom3Color = [0, 0, 0]
