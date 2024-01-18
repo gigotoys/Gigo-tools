@@ -625,94 +625,85 @@ export function ColorSensorRead(channel: Channel = 1): number {
                 break;
         }
     }
-     let colorright = false
-let forkrange = 100
-
-//% weight=12
-//% block="read color equal to %colorpart |"
-//% subcategory="Add on pack"
-//% group="Color Sensor"
-export function ReadColorEqual(colorpart: ColorPart = 1): boolean {
-    // 获取白平衡补偿值
-    const compensationValues = whiteBalanceCompensation();
-
-    switch (colorpart) {
-        case 1:
-            if ((Math.abs(ReadRedColor[0] - nowReadColor[0] * compensationValues[0]) < forkrange) &&
-                (Math.abs(ReadRedColor[1] - nowReadColor[1] * compensationValues[1]) < forkrange) &&
-                (Math.abs(ReadRedColor[2] - nowReadColor[2] * compensationValues[2]) < forkrange)) {
-                colorright = true
-            } else {
-                colorright = false
-            }
-            break;
-        case 2:
-            if ((Math.abs(ReadGreenColor[0] - nowReadColor[0] * compensationValues[0]) < forkrange) &&
-                (Math.abs(ReadGreenColor[1] - nowReadColor[1] * compensationValues[1]) < forkrange) &&
-                (Math.abs(ReadGreenColor[2] - nowReadColor[2] * compensationValues[2]) < forkrange)) {
-                colorright = true
-            } else {
-                colorright = false
-            }
-            break;
-        case 3:
-            if ((Math.abs(ReadBlueColor[0] - nowReadColor[0] * compensationValues[0]) < forkrange) &&
-                (Math.abs(ReadBlueColor[1] - nowReadColor[1] * compensationValues[1]) < forkrange) &&
-                (Math.abs(ReadBlueColor[2] - nowReadColor[2] * compensationValues[2]) < forkrange)) {
-                colorright = true
-            } else {
-                colorright = false
-            }
-            break;
-        case 4:
-            if ((Math.abs(ReadYellowColor[0] - nowReadColor[0] * compensationValues[0]) < forkrange) &&
-                (Math.abs(ReadYellowColor[1] - nowReadColor[1] * compensationValues[1]) < forkrange) &&
-                (Math.abs(ReadYellowColor[2] - nowReadColor[2] * compensationValues[2]) < forkrange)) {
-                colorright = true
-            } else {
-                colorright = false
-            }
-            break;
-        case 5:
-            if ((Math.abs(ReadPurpleColor[0] - nowReadColor[0] * compensationValues[0]) < forkrange) &&
-                (Math.abs(ReadPurpleColor[1] - nowReadColor[1] * compensationValues[1]) < forkrange) &&
-                (Math.abs(ReadPurpleColor[2] - nowReadColor[2] * compensationValues[2]) < forkrange)) {
-                colorright = true
-            } else {
-                colorright = false
-            }
-            break;
-        case 6:
-            if ((Math.abs(ReadCustom1Color[0] - nowReadColor[0] * compensationValues[0]) < forkrange) &&
-                (Math.abs(ReadCustom1Color[1] - nowReadColor[1] * compensationValues[1]) < forkrange) &&
-                (Math.abs(ReadCustom1Color[2] - nowReadColor[2] * compensationValues[2]) < forkrange)) {
-                colorright = true
-            } else {
-                colorright = false
-            }
-            break;
-        case 7:
-            if ((Math.abs(ReadCustom2Color[0] - nowReadColor[0] * compensationValues[0]) < forkrange) &&
-                (Math.abs(ReadCustom2Color[1] - nowReadColor[1] * compensationValues[1]) < forkrange) &&
-                (Math.abs(ReadCustom2Color[2] - nowReadColor[2] * compensationValues[2]) < forkrange)) {
-                colorright = true
-            } else {
-                colorright = false
-            }
-            break;
-        case 8:
-            if ((Math.abs(ReadCustom3Color[0] - nowReadColor[0] * compensationValues[0]) < forkrange) &&
-                (Math.abs(ReadCustom3Color[1] - nowReadColor[1] * compensationValues[1]) < forkrange) &&
-                (Math.abs(ReadCustom3Color[2] - nowReadColor[2] * compensationValues[2]) < forkrange)) {
-                colorright = true
-            } else {
-                colorright = false
-            }
-            break;
+let colorright = false
+    let forkrange = 10
+    //% weight=12
+    //% block="read color equal to %colorpart |"
+    //% subcategory="Add on pack"
+     //% group="Color Sensor"
+    export function ReadColorEqual(colorpart: ColorPart = 1): boolean {
+        switch (colorpart) {
+            case 1:
+                if ((Math.abs(ReadRedColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadRedColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadRedColor[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else {
+                    colorright = false
+                }
+                break;
+            case 2:
+                if ((Math.abs(ReadGreenColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadGreenColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadGreenColor[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else {
+                    colorright = false
+                }
+                break;
+            case 3:
+                if ((Math.abs(ReadBlueColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadBlueColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadBlueColor[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else {
+                    colorright = false
+                }
+                break;
+            case 4:
+                if ((Math.abs(ReadYellowColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadYellowColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadYellowColor[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else {
+                    colorright = false
+                }
+                break;
+          
+            case 5:
+                if ((Math.abs(ReadPurpleColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadPurpleColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadPurpleColor[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else {
+                    colorright = false
+                }
+                break;
+            case 6:
+                if ((Math.abs(ReadCustom1Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadCustom1Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadCustom1Color[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else {
+                    colorright = false
+                }
+                break;
+            case 7:
+                if ((Math.abs(ReadCustom2Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadCustom2Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadCustom2Color[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else {
+                    colorright = false
+                }
+                break;
+            case 8:
+                if ((Math.abs(ReadCustom3Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadCustom3Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadCustom3Color[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else {
+                    colorright = false
+                }
+                break;
+        }
+        if (colorright == true) {
+            return true
+        }
+        else {
+            return false
+        }
     }
-
-    return colorright;
-}
-
-
 }
