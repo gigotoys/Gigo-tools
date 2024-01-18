@@ -533,17 +533,17 @@ export function ColorSensorRead(channel: Channel = 1): number {
         case 1:
             TCS_RED *= compensationValues[0];
             RdCl = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255));
-            RdCl = Math.min(255, Math.max(0, RdCl)); // 将结果限制在 0 到 255 之间
+           
             break;
         case 2:
             TCS_GREEN *= compensationValues[1];
             RdCl = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255));
-            RdCl = Math.min(255, Math.max(0, RdCl)); // 将结果限制在 0 到 255 之间
+            
             break;
         case 3:
             TCS_BLUE *= compensationValues[2];
             RdCl = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255));
-            RdCl = Math.min(255, Math.max(0, RdCl)); // 将结果限制在 0 到 255 之间
+            
             break;
     }
 
