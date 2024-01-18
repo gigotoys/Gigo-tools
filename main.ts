@@ -419,7 +419,7 @@ namespace Gigotools {
     ////////////////////////////////
     //          顏色感測器        //
     ////////////////////////////////
-       //% weight=12
+     //% weight=12
     //% block="initialize color sensor"
     //% subcategory="Add on pack" 
     //% group="Color Sensor"
@@ -493,9 +493,9 @@ namespace Gigotools {
         TCS_GREEN *= compensationValues[1];
         TCS_BLUE *= compensationValues[2];
     
-        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535 * compensationValues[0], 0, 255));
-        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535 * compensationValues[1], 0, 255));
-        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535 * compensationValues[2], 0, 255));
+        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255));
+        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255));
+        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255));
     
         // 將讀取的顏色數據存回 nowReadColor
         nowReadColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
@@ -531,16 +531,19 @@ export function ColorSensorRead(channel: Channel = 1): number {
     let RdCl = 0;
     switch (channel) {
         case 1:
-            
-            RdCl = Math.round(Math.map(TCS_RED, 0, 65535 * compensationValues[0], 0, 255));
+            TCS_RED *= compensationValues[0];
+            RdCl = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255));
+            RdCl = Math.min(255, Math.max(0, RdCl)); // 将结果限制在 0 到 255 之间
             break;
         case 2:
-          
-            RdCl = Math.round(Math.map(TCS_GREEN, 0, 65535 * compensationValues[1], 0, 255));
+            TCS_GREEN *= compensationValues[1];
+            RdCl = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255));
+            RdCl = Math.min(255, Math.max(0, RdCl)); // 将结果限制在 0 到 255 之间
             break;
         case 3:
-           
-            RdCl = Math.round(Math.map(TCS_BLUE, 0, 65535 * compensationValues[2], 0, 255));
+            TCS_BLUE *= compensationValues[2];
+            RdCl = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255));
+            RdCl = Math.min(255, Math.max(0, RdCl)); // 将结果限制在 0 到 255 之间
             break;
     }
 
@@ -596,9 +599,9 @@ export function ColorSensorRead(channel: Channel = 1): number {
         TCS_GREEN *= compensationValues[1];
         TCS_BLUE *= compensationValues[2];
     
-        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535* compensationValues[0], 0, 255));
-        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535* compensationValues[1], 0, 255));
-        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535* compensationValues[2], 0, 255));
+        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255));
+        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255));
+        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255));
     
         switch (colorpart) {
             case 1:
