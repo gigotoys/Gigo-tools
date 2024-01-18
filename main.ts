@@ -446,8 +446,8 @@ namespace Gigotools {
         pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true)
         let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
         TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
-        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
-        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
+        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535*1.1, 0, 255))
+        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535*1.2, 0, 255))
         nowReadColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
     }
     /**
@@ -482,10 +482,10 @@ namespace Gigotools {
                 RdCl = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
                 break;
             case 2:
-                RdCl = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
+                RdCl = Math.round(Math.map(TCS_GREEN, 0, 65535*1.1, 0, 255))
                 break;
             case 3:
-                RdCl = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
+                RdCl = Math.round(Math.map(TCS_BLUE, 0, 65535*1.2, 0, 255))
                 break;
         }
 
@@ -535,8 +535,8 @@ namespace Gigotools {
         pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true)
         let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
         TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
-        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
-        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
+        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535*1.1, 0, 255))
+        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535*1.2, 0, 255))
         switch (colorpart) {
             case 1:
                 ReadRedColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
