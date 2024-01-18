@@ -568,9 +568,9 @@ export function ColorSensorRead(channel: Channel = 1): number {
         Custom3 = 8
     }
 
-    let ReadRedColor = [0, 0, 0]
-    let ReadGreenColor = [0, 0, 0]
-    let ReadBlueColor = [0, 0, 0]
+    let ReadRedColor = [425, 273, 275]
+    let ReadGreenColor = [291, 322, 289]
+    let ReadBlueColor = [279, 305, 344]
     let ReadYellowColor = [0, 0, 0]
     let ReadPurpleColor = [0, 0, 0]
     let ReadCustom1Color = [0, 0, 0]
