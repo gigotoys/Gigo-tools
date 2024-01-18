@@ -462,7 +462,7 @@ function whiteBalanceCompensation(): number[] {
 
     return [ra, ga, ba];  // 回傳補償系數
 }
-
+ let nowReadColor = [0, 0, 0]
 //% weight=12
 //% block="color sensor read color"
 //% subcategory="Add on pack"
