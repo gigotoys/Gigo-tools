@@ -626,7 +626,7 @@ export function ColorSensorRead(channel: Channel = 1): number {
         }
     }
      let colorright = false
-let forkrange = 10
+let forkrange = 100
 
 //% weight=12
 //% block="read color equal to %colorpart |"
