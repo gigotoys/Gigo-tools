@@ -565,7 +565,7 @@ namespace Gigotools {
         }
     }
      let colorright = false
-    let forkrange = 30
+    let forkrange = 10
     //% weight=12
     //% block="read color equal to %colorpart |"
     //% subcategory="Add on pack"
