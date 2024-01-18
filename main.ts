@@ -429,7 +429,7 @@ namespace Gigotools {
     }
     /**
     */
-    let nowReadColor = [0, 0, 0]
+    let nowReadColor = [96, 134, 129]
     //% weight=12
     //% block="color sensor read color"
     //% subcategory="Add on pack"
@@ -450,79 +450,6 @@ namespace Gigotools {
         TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
         nowReadColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
     }
-//% weight=12
-//% block="initialize color sensor test"
-//% subcategory="Add on pack" 
-//% group="Color Sensor"
-export function ColorSensorinit(): number[] {
-    // 初始化顏色感應器
-    pins.i2cWriteNumber(41, 33276, NumberFormat.UInt16BE, false);
-    pins.i2cWriteNumber(41, 32771, NumberFormat.UInt16BE, false);
-
-    // 執行白色補償，並獲取補償數值
-    let compensationValues: number[] = whiteBalanceCompensation();
-    
-    // 回傳補償數值
-    return compensationValues;
-}
-
-// 白平衡補償函數
-function whiteBalanceCompensation(): number[] {
-    pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false);
-    pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false);
-    pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true);
-
-    let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
-
-    pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true);
-    let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
-
-    pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true);
-    let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
-
-    TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255));
-    TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255));
-    TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255));
-
-    let ra: number = 255.0 / TCS_RED;   // R 補償系數
-    let ga: number = 255.0 / TCS_GREEN; // G 補償系數
-    let ba: number = 255.0 / TCS_BLUE;  // B 補償系數
-
-    // 在這裡進行白平衡補償
-    // 這裡只是一個示例，實際上需要根據感應器規格進行更多的校準操作
-
-    return [ra, ga, ba];  // 回傳補償系數
-}
- let nowReadColor = [0, 0, 0]
-//% weight=12
-//% block="color sensor read color test"
-//% subcategory="Add on pack"
-//% group="Color Sensor"
-export function ColorSensorReadColor(compensationValues: number[]): number[] {
-    pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false);
-    pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false);
-    pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true);
-
-    let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
-
-    pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true);
-    let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
-
-    pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true);
-    let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
-
-    TCS_RED *= compensationValues[0];
-    TCS_GREEN *= compensationValues[1];
-    TCS_BLUE *= compensationValues[2];
-
-    TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255));
-    TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255));
-    TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255));
-
-    return [TCS_RED, TCS_GREEN, TCS_BLUE];
-}
-
-    
     export enum Channel {
         //% block="R"
         Red = 1,
