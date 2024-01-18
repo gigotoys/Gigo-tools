@@ -563,11 +563,11 @@ export function ColorSensorRead(channel: Channel = 1): number {
         Custom3 = 8
     }
 
-    let ReadRedColor = [165, 148, 135]
-    let ReadGreenColor = [132, 158, 136]
-    let ReadBlueColor = [130, 154, 145]
-    let ReadYellowColor = [201, 181, 147]
-    let ReadPurpleColor = [139, 148, 138]
+    let ReadRedColor = [0, 0, 0]
+    let ReadGreenColor = [0, 0, 0]
+    let ReadBlueColor = [0, 0, 0]
+    let ReadYellowColor = [0, 0, 0]
+    let ReadPurpleColor = [0, 0, 0]
     let ReadCustom1Color = [0, 0, 0]
     let ReadCustom2Color = [0, 0, 0]
     let ReadCustom3Color = [0, 0, 0]
@@ -576,44 +576,52 @@ export function ColorSensorRead(channel: Channel = 1): number {
     //% block="color sensor record %colorpart |"
     //% subcategory="Add on pack"
      //% group="Color Sensor"
-    export function ColorSensorRecord(colorpart: ColorPart = 1): void {
-        pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
-
-        pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
-
-        pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true)
-        let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true)
-        let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true)
-        let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
-        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
-        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
+     export function ColorSensorRecord(colorpart: ColorPart = 1): void {
+        // 调用 whiteBalanceCompensation 获取补偿值
+        const compensationValues = whiteBalanceCompensation();
+    
+        pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false);
+        pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false);
+        pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true);
+    
+        let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+        pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true);
+        let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+        pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true);
+        let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+    
+        TCS_RED *= compensationValues[0];
+        TCS_GREEN *= compensationValues[1];
+        TCS_BLUE *= compensationValues[2];
+    
+        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255));
+        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255));
+        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255));
+    
         switch (colorpart) {
             case 1:
-                ReadRedColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadRedColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 2:
-                ReadGreenColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadGreenColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 3:
-                ReadBlueColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadBlueColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 4:
-                ReadYellowColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadYellowColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 5:
-                ReadPurpleColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadPurpleColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 6:
-                ReadCustom1Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadCustom1Color = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 7:
-                ReadCustom2Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadCustom2Color = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 8:
-                ReadCustom3Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadCustom3Color = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
         }
     }
