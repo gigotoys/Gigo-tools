@@ -420,7 +420,7 @@ namespace Gigotools {
     //          顏色感測器        //
     ////////////////////////////////
        //% weight=12
-    //% block="color sensor initialization"
+    //% block="initialize color sensor"
     //% subcategory="Add on pack" 
     //% group="Color Sensor"
     export function ColorSensorinit(): void {
