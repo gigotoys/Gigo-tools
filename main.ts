@@ -531,15 +531,15 @@ export function ColorSensorRead(channel: Channel = 1): number {
     let RdCl = 0;
     switch (channel) {
         case 1:
-            TCS_RED *= compensationValues[0];
+            
             RdCl = Math.round(Math.map(TCS_RED, 0, 65535 * compensationValues[0], 0, 255));
             break;
         case 2:
-            TCS_GREEN *= compensationValues[1];
+          
             RdCl = Math.round(Math.map(TCS_GREEN, 0, 65535 * compensationValues[1], 0, 255));
             break;
         case 3:
-            TCS_BLUE *= compensationValues[2];
+           
             RdCl = Math.round(Math.map(TCS_BLUE, 0, 65535 * compensationValues[2], 0, 255));
             break;
     }
