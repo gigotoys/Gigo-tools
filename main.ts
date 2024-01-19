@@ -545,13 +545,15 @@ export function ColorSensorinit(): void {
                 ReadGreenColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
                 break;
             case 3:
-                ReadBlueColor = [TCS_RED, TCS_GREEN, TCS_BLUE +30]
+                TCS_BLUE +=30;
+                ReadBlueColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
                 break;
             case 4:
                 ReadYellowColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
                 break;
             case 5:
-                ReadPurpleColor = [TCS_RED, TCS_GREEN, TCS_BLUE +30]
+                TCS_BLUE +=30;
+                ReadPurpleColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
                 break;
             case 6:
                 ReadCustom1Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
