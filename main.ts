@@ -419,7 +419,7 @@ namespace Gigotools {
     ////////////////////////////////
     //          顏色感測器        //
     ////////////////////////////////
-       //% weight=12
+    //% weight=12
     //% block="initialize color sensor"
     //% subcategory="Add on pack" 
     //% group="Color Sensor"
@@ -429,26 +429,76 @@ namespace Gigotools {
     }
     /**
     */
-    let nowReadColor = [0, 0, 0]
+    let compensationValues: number[] | null = null;
+   //% weight=12
+    //% block="white balance"
+    //% subcategory="Add on pack" 
+    //% group="Color Sensor"
+    export function whiteBalanceCompensation(): number[] {
+        // 如果補償數值尚未計算，則進行計算
+        if (compensationValues === null) {
+            pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false);
+            pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false);
+            pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true);
+    
+            let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+    
+            pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true);
+            let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+    
+            pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true);
+            let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+    
+            TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255));
+            TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255));
+            TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255));
+    
+            let ra: number = 255.0 / TCS_RED;   // R 補償系數
+            let ga: number = 255.0 / TCS_GREEN; // G 補償系數
+            let ba: number = 255.0 / TCS_BLUE;  // B 補償系數
+    
+            // 將計算得到的補償數值存儲在全域變數中
+            compensationValues = [ra, ga, ba];
+        }
+    
+        // 返回補償數值
+        return compensationValues;
+    }
+    
+    /**
+    */
+    let nowReadColor = [0, 0, 0];
+    
     //% weight=12
     //% block="color sensor read color"
     //% subcategory="Add on pack"
-     //% group="Color Sensor"
+    //% group="Color Sensor"
     export function ColorSensorReadColor(): void {
-        pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
-
-        pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
-
-        pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true)
-        let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true)
-        let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true)
-        let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
-        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535 * 1.1, 0, 255))
-        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535 * 1.2, 0, 255))
-        nowReadColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+        // 在 ColorSensorReadColor 函數中呼叫 whiteBalanceCompensation 函數
+        let compensationValues = whiteBalanceCompensation();
+    
+        pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false);
+        pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false);
+        pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true);
+    
+        let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+    
+        pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true);
+        let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+    
+        pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true);
+        let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+    
+        TCS_RED *= compensationValues[0];
+        TCS_GREEN *= compensationValues[1];
+        TCS_BLUE *= compensationValues[2];
+    
+        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255));
+        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255));
+        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255));
+    
+        // 將讀取的顏色數據存回 nowReadColor
+        nowReadColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
     }
     /**
    */
@@ -460,37 +510,45 @@ namespace Gigotools {
         //% block="B"
         Blue = 3
     }
-    //% weight=12
-    //% block="color sensor read RGB %channel |channel"
-     //% subcategory="Add on pack"
-      //% group="Color Sensor"
-    export function ColorSensorRead(channel: Channel = 1): number {
-        pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
+ //% weight=12
+//% block="color sensor read RGB %channel |channel"
+//% subcategory="Add on pack"
+//% group="Color Sensor"
+export function ColorSensorRead(channel: Channel = 1): number {
+    // 调用 whiteBalanceCompensation 获取补偿值
+    const compensationValues = whiteBalanceCompensation();
 
-        pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
+    pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false);
+    pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false);
+    pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true);
 
-        pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true)
-        let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true)
-        let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true)
-        let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
+    let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+    pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true);
+    let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+    pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true);
+    let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
 
-        let RdCl = 0
-        switch (channel) {
-            case 1:
-                RdCl = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
-                break;
-            case 2:
-                RdCl = Math.round(Math.map(TCS_GREEN, 0, 65535 * 1.1, 0, 255))
-                break;
-            case 3:
-                RdCl = Math.round(Math.map(TCS_BLUE, 0, 65535 * 1.2, 0, 255))
-                break;
-        }
-
-        return RdCl
+    let RdCl = 0;
+    switch (channel) {
+        case 1:
+            TCS_RED *= compensationValues[0];
+            RdCl = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255));
+            
+            break;
+        case 2:
+            TCS_GREEN *= compensationValues[1];
+            RdCl = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255));
+            
+            break;
+        case 3:
+            TCS_BLUE *= compensationValues[2];
+            RdCl = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255));
+            
+            break;
     }
+
+    return RdCl;
+}
     export enum ColorPart {
         //% block="Red"
         Red = 1,
@@ -510,11 +568,11 @@ namespace Gigotools {
         Custom3 = 8
     }
 
-    let ReadRedColor = [107, 84, 75]
-    let ReadGreenColor = [72, 98, 78]
-    let ReadBlueColor = [69, 93, 93]
-    let ReadYellowColor = [147, 126, 88]
-    let ReadPurpleColor = [79, 85, 82]
+    let ReadRedColor = [0, 0, 0]
+    let ReadGreenColor = [0, 0, 0]
+    let ReadBlueColor = [0, 0, 0]
+    let ReadYellowColor = [0, 0, 0]
+    let ReadPurpleColor = [0, 0, 0]
     let ReadCustom1Color = [0, 0, 0]
     let ReadCustom2Color = [0, 0, 0]
     let ReadCustom3Color = [0, 0, 0]
@@ -523,44 +581,52 @@ namespace Gigotools {
     //% block="color sensor record %colorpart |"
     //% subcategory="Add on pack"
      //% group="Color Sensor"
-    export function ColorSensorRecord(colorpart: ColorPart = 1): void {
-        pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
-
-        pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false)
-
-        pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true)
-        let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true)
-        let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true)
-        let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false)
-        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255))
-        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255))
-        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255))
+     export function ColorSensorRecord(colorpart: ColorPart = 1): void {
+        // 调用 whiteBalanceCompensation 获取补偿值
+        const compensationValues = whiteBalanceCompensation();
+    
+        pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false);
+        pins.i2cWriteNumber(41, 179, NumberFormat.Int8LE, false);
+        pins.i2cWriteNumber(41, 182, NumberFormat.Int8LE, true);
+    
+        let TCS_RED = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+        pins.i2cWriteNumber(41, 184, NumberFormat.Int8LE, true);
+        let TCS_GREEN = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+        pins.i2cWriteNumber(41, 186, NumberFormat.Int8LE, true);
+        let TCS_BLUE = pins.i2cReadNumber(41, NumberFormat.UInt16BE, false);
+    
+        TCS_RED *= compensationValues[0];
+        TCS_GREEN *= compensationValues[1];
+        TCS_BLUE *= compensationValues[2];
+    
+        TCS_RED = Math.round(Math.map(TCS_RED, 0, 65535, 0, 255));
+        TCS_GREEN = Math.round(Math.map(TCS_GREEN, 0, 65535, 0, 255));
+        TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255));
+    
         switch (colorpart) {
             case 1:
-                ReadRedColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadRedColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 2:
-                ReadGreenColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadGreenColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 3:
-                ReadBlueColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadBlueColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 4:
-                ReadYellowColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadYellowColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 5:
-                ReadPurpleColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadPurpleColor = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 6:
-                ReadCustom1Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadCustom1Color = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 7:
-                ReadCustom2Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadCustom2Color = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
             case 8:
-                ReadCustom3Color = [TCS_RED, TCS_GREEN, TCS_BLUE]
+                ReadCustom3Color = [TCS_RED, TCS_GREEN, TCS_BLUE];
                 break;
         }
     }
