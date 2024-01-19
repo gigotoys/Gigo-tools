@@ -454,8 +454,8 @@ const whiteBalanceCompensation = (function () {
             TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255));
 
             let ra: number = TCS_RED;   // R 補償系數
-            let ga: number = TCS_GREEN; // G 補償系數
-            let ba: number = TCS_BLUE;  // B 補償系數
+            let ga: number = TCS_GREEN * 2; // G 補償系數
+            let ba: number = TCS_BLUE * 2;  // B 補償系數
 
             // 將計算得到的補償數值存儲在全域變數中
             compensationValues = [ra, ga, ba];
