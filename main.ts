@@ -545,7 +545,7 @@ export function ColorSensorRead(channel: Channel = 1): number {
         case 3:
             TCS_BLUE = Math.round(Math.map(TCS_BLUE, 0, 65535, 0, 255));
             TCS_BLUE -= compensationValues[2];
-            RdCl = CS_BLUE;
+            RdCl = TCS_BLUE;
             
             break;
     }
