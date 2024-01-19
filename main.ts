@@ -456,8 +456,8 @@ const whiteBalanceCompensation = (function () {
             let ra: number = TCS_RED;   // R 補償系數
             let ga: number = TCS_GREEN ; // G 補償系數
             let ba: number = TCS_BLUE ;  // B 補償系數
-            ra *=2;
-            ga *=2;
+            ga +=20;
+            ba +=20;
 
             // 將計算得到的補償數值存儲在全域變數中
             compensationValues = [ra, ga, ba];
