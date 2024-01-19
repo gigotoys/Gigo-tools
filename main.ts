@@ -510,11 +510,11 @@ export function ColorSensorinit(): void {
         Custom3 = 8
     }
 
-    let ReadRedColor = [180, 151, 124]
-    let ReadGreenColor = [143, 159, 123]
-    let ReadBlueColor = [140, 154, 129]
-    let ReadYellowColor = [218, 183, 135]
-    let ReadPurpleColor = [150, 150, 124]
+    let ReadRedColor = [130, 144, 140]
+    let ReadGreenColor = [107, 155, 142]
+    let ReadBlueColor = [104, 150, 152]
+    let ReadYellowColor = [159, 175, 149]
+    let ReadPurpleColor = [110, 144, 144]
     let ReadCustom1Color = [0, 0, 0]
     let ReadCustom2Color = [0, 0, 0]
     let ReadCustom3Color = [0, 0, 0]
@@ -545,14 +545,12 @@ export function ColorSensorinit(): void {
                 ReadGreenColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
                 break;
             case 3:
-                TCS_BLUE +=30;
                 ReadBlueColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
                 break;
             case 4:
                 ReadYellowColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
                 break;
             case 5:
-                TCS_BLUE +=30;
                 ReadPurpleColor = [TCS_RED, TCS_GREEN, TCS_BLUE]
                 break;
             case 6:
