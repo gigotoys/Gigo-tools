@@ -660,7 +660,7 @@ export function GEMS_setSerial(): void {
     serial.redirect(
         myRxPin,
         myTxPin,
-        BaudRate.BaudRate9600
+        BaudRate.BaudRate115200
     );
     init = true;
 }
