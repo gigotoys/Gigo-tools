@@ -645,5 +645,49 @@ export function ColorSensorinit(): void {
             return false
         }
     }
+    ////////////////////////////////
+    //         GEMS      //
+    ////////////////////////////////
+    //% weight=100
+//% blockId="GEMS_setSerial" block="set NFC RX to P2 with BaudRate 9600"
+export function NFC_setSerial(): void {
+    myRxPin = SerialPin.P2;
+    myTxPin = SerialPin.P1;  // Assuming TX is set to P1
+    serial.redirect(
+        myRxPin,
+        myTxPin,
+        BaudRate.BaudRate9600
+    );
+    init = true;
+}
+
+//% weight=80
+//% blockId="getUID" block="RFID UID string"
+export function getUID(): string {
+    serial.setRxBufferSize(100);
+    let uidBuffer: number[] = [];
+
+    // Assuming you have a function to receive data into uidBuffer
+    receiveData(uidBuffer);
+
+    // Convert the array of numbers to a string and return it
+    return uidBuffer.map(num => String.fromCharCode(num)).join('');
+}
+
+// Example function for receiving data into uidBuffer
+function receiveData(buffer: number[]): void {
+    // This is just a placeholder. Implement the actual logic for receiving data.
+    // For instance, you might use serial.readBuffer or serial.readUntil to read data into the buffer.
+    // The actual implementation depends on your hardware and communication protocol.
+    // Adapt this function based on your specific requirements.
+    // Example:
+    while (true) {
+        let data = serial.readBuffer(1);
+        if (data.length > 0) {
+            buffer.push(data[0]);
+        }
+        // Add your exit condition based on the data you receive.
+    }
+}
 
 }
