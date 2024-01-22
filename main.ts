@@ -722,4 +722,4 @@ function receiveData(table: number[]): void {
 
 }
 
-}
+
