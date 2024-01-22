@@ -648,7 +648,7 @@ export function ColorSensorinit(): void {
     ////////////////////////////////
     //         GEMS      //
     ////////////////////////////////
-User
+
 let myRxPin: SerialPin;
 let myTxPin: SerialPin;
 let init: boolean = false;
