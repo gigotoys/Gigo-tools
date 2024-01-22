@@ -648,7 +648,7 @@ export function ColorSensorinit(): void {
     ////////////////////////////////
     //         GEMS      //
     ////////////////////////////////
-    let myRxPin: SerialPin;
+ let myRxPin: SerialPin;
 let myTxPin: SerialPin;
 let init: boolean = false;
 
@@ -666,31 +666,73 @@ export function NFC_setSerial(): void {
 }
 
 //% weight=80
-//% blockId="getVoltageAndCurrent" block="Get Voltage and Current Data"
-export function getVoltageAndCurrent(): number[] {
-    let table: number[] = [0, 0, 0, 0];
+//% blockId="getVoltage" block="Get Voltage Data"
+export function getVoltage(): number {
+    let voltage: number = 0;
 
     // Assuming you have a function to receive data
-    receiveVoltageAndCurrentData(table);
+    receiveVoltageData(voltage);
 
-    return table;
+    // Perform the necessary conversion based on your sensor's characteristics
+    voltage = convertRawToVoltage(voltage);
+
+    return voltage;
 }
 
-function receiveVoltageAndCurrentData(table: number[]): void {
+//% weight=80
+//% blockId="getCurrent" block="Get Current Data"
+export function getCurrent(): number {
+    let current: number = 0;
+
+    // Assuming you have a function to receive data
+    receiveCurrentData(current);
+
+    // Perform the necessary conversion based on your sensor's characteristics
+    current = convertRawToCurrent(current);
+
+    return current;
+}
+
+function receiveVoltageData(voltage: number): void {
     while (true) {
-        let buffer = serial.readBuffer(4); // Assuming you are reading 4 bytes of data
-        if (buffer.length >= 4) {
-            // Fill the table array with the received data
-            table[0] = buffer[0];
-            table[1] = buffer[1];
-            table[2] = buffer[2];
-            table[3] = buffer[3];
+        let buffer = serial.readBuffer(2); // Assuming you are reading 2 bytes of data for voltage
+        if (buffer.length >= 2) {
+            // Extract voltage from the received data
+            voltage = (buffer[1] << 8) | buffer[0];
 
             // Add your exit condition based on the data you receive.
             break;
         }
     }
 }
+
+function receiveCurrentData(current: number): void {
+    while (true) {
+        let buffer = serial.readBuffer(2); // Assuming you are reading 2 bytes of data for current
+        if (buffer.length >= 2) {
+            // Extract current from the received data
+            current = (buffer[1] << 8) | buffer[0];
+
+            // Add your exit condition based on the data you receive.
+            break;
+        }
+    }
+}
+
+function convertRawToVoltage(rawValue: number): number {
+    // Add your conversion logic based on the characteristics of your sensor
+    // For example, if it's a 16-bit signed integer representing voltage in millivolts:
+    // voltage = rawValue * 0.001; // Convert to volts
+    return rawValue;
+}
+
+function convertRawToCurrent(rawValue: number): number {
+    // Add your conversion logic based on the characteristics of your sensor
+    // For example, if it's a 16-bit signed integer representing current in milliamps:
+    // current = rawValue * 0.001; // Convert to amps
+    return rawValue;
+}
+
 
 
 }
