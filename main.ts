@@ -648,7 +648,8 @@ export function ColorSensorinit(): void {
     ////////////////////////////////
     //         GEMS      //
     ////////////////////////////////
- let myRxPin: SerialPin;
+User
+let myRxPin: SerialPin;
 let myTxPin: SerialPin;
 let init: boolean = false;
 
@@ -668,6 +669,7 @@ export function NFC_setSerial(): void {
 //% weight=80
 //% blockId="getVoltage" block="Get Voltage Data"
 export function getVoltage(): number {
+    serial.setRxBufferSize(2); // Assuming you are receiving 2 bytes for voltage
     let voltage: number = 0;
 
     // Assuming you have a function to receive data
@@ -682,6 +684,7 @@ export function getVoltage(): number {
 //% weight=80
 //% blockId="getCurrent" block="Get Current Data"
 export function getCurrent(): number {
+    serial.setRxBufferSize(2); // Assuming you are receiving 2 bytes for current
     let current: number = 0;
 
     // Assuming you have a function to receive data
@@ -718,21 +721,5 @@ function receiveCurrentData(current: number): void {
         }
     }
 }
-
-function convertRawToVoltage(rawValue: number): number {
-    // Add your conversion logic based on the characteristics of your sensor
-    // For example, if it's a 16-bit signed integer representing voltage in millivolts:
-    // voltage = rawValue * 0.001; // Convert to volts
-    return rawValue;
-}
-
-function convertRawToCurrent(rawValue: number): number {
-    // Add your conversion logic based on the characteristics of your sensor
-    // For example, if it's a 16-bit signed integer representing current in milliamps:
-    // current = rawValue * 0.001; // Convert to amps
-    return rawValue;
-}
-
-
 
 }
