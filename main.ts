@@ -648,16 +648,15 @@ export function ColorSensorinit(): void {
     ////////////////////////////////
     //         GEMS      //
     ////////////////////////////////
-
 let myRxPin: SerialPin;
 let myTxPin: SerialPin;
 let init: boolean = false;
 
 //% weight=100
-//% blockId="GEMS_setSerial" block="set NFC RX to P2 with BaudRate 9600"
-export function NFC_setSerial(): void {
+//% blockId="GEMS_setSerial" block="設置 RX 為 P2，波特率 9600"
+export function GEMS_setSerial(): void {
     myRxPin = SerialPin.P2;
-    myTxPin = SerialPin.P1;  // Assuming TX is set to P1
+    myTxPin = SerialPin.P1;  // 假設 TX 被設置為 P1
     serial.redirect(
         myRxPin,
         myTxPin,
@@ -666,60 +665,61 @@ export function NFC_setSerial(): void {
     init = true;
 }
 
-//% weight=80
-//% blockId="getVoltage" block="Get Voltage Data"
+//% weight=70
+//% blockId="getVoltage" block="獲取電壓"
 export function getVoltage(): number {
-    serial.setRxBufferSize(2); // Assuming you are receiving 2 bytes for voltage
-    let voltage: number = 0;
+    let data: number[] = [];
+    receiveData(data);
 
-    // Assuming you have a function to receive data
-    receiveVoltageData(voltage);
-
-    // Perform the necessary conversion based on your sensor's characteristics
-    voltage = convertRawToVoltage(voltage);
-
-    return voltage;
+    // 假設你有一個從數據中提取電壓的函數
+    return extractVoltage(data);
 }
 
-//% weight=80
-//% blockId="getCurrent" block="Get Current Data"
+//% weight=60
+//% blockId="getCurrent" block="獲取電流"
 export function getCurrent(): number {
-    serial.setRxBufferSize(2); // Assuming you are receiving 2 bytes for current
-    let current: number = 0;
+    let data: number[] = [];
+    receiveData(data);
 
-    // Assuming you have a function to receive data
-    receiveCurrentData(current);
-
-    // Perform the necessary conversion based on your sensor's characteristics
-    current = convertRawToCurrent(current);
-
-    return current;
+    // 假設你有一個從數據中提取電流的函數
+    return extractCurrent(data);
 }
 
-function receiveVoltageData(voltage: number): void {
-    while (true) {
-        let buffer = serial.readBuffer(2); // Assuming you are reading 2 bytes of data for voltage
-        if (buffer.length >= 2) {
-            // Extract voltage from the received data
-            voltage = (buffer[1] << 8) | buffer[0];
+function extractVoltage(data: number[]): number {
+    // 從接收到的數據中提取電壓值
+    return (data[1] << 8) | data[0];
+}
 
-            // Add your exit condition based on the data you receive.
-            break;
+function extractCurrent(data: number[]): number {
+    // 從接收到的數據中提取電流值
+    return (data[3] << 8) | data[2];
+}
+
+function receiveData(table: number[]): void {
+    const MAX_ATTEMPTS = 100; // 最大嘗試次數
+    let attempts = 0;
+
+    while (attempts < MAX_ATTEMPTS) {
+        let data = serial.readBuffer(4);
+        
+        if (data.length >= 4) {
+            // 將值存儲到 table 數組中
+            table[0] = data[0];
+            table[1] = data[1];
+            table[2] = data[2];
+            table[3] = data[3];
+
+            // 添加退出循環的條件，例如根據接收到的數據
+            if (table[0] != 0 && table[1] != 0 && table[2] != 0 && table[3] != 0) {
+                break;
+            }
         }
+
+        basic.pause(10); // 暫停一小段時間，避免快速迴圈
+        attempts++;
     }
 }
 
-function receiveCurrentData(current: number): void {
-    while (true) {
-        let buffer = serial.readBuffer(2); // Assuming you are reading 2 bytes of data for current
-        if (buffer.length >= 2) {
-            // Extract current from the received data
-            current = (buffer[1] << 8) | buffer[0];
-
-            // Add your exit condition based on the data you receive.
-            break;
-        }
-    }
 }
 
 }
