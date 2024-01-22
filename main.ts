@@ -648,7 +648,11 @@ export function ColorSensorinit(): void {
     ////////////////////////////////
     //         GEMS      //
     ////////////////////////////////
-    //% weight=100
+    let myRxPin: SerialPin;
+let myTxPin: SerialPin;
+let init: boolean = false;
+
+//% weight=100
 //% blockId="GEMS_setSerial" block="set NFC RX to P2 with BaudRate 9600"
 export function NFC_setSerial(): void {
     myRxPin = SerialPin.P2;
@@ -676,11 +680,6 @@ export function getUID(): string {
 
 // Example function for receiving data into uidBuffer
 function receiveData(buffer: number[]): void {
-    // This is just a placeholder. Implement the actual logic for receiving data.
-    // For instance, you might use serial.readBuffer or serial.readUntil to read data into the buffer.
-    // The actual implementation depends on your hardware and communication protocol.
-    // Adapt this function based on your specific requirements.
-    // Example:
     while (true) {
         let data = serial.readBuffer(1);
         if (data.length > 0) {
