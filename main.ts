@@ -666,27 +666,31 @@ export function NFC_setSerial(): void {
 }
 
 //% weight=80
-//% blockId="getUID" block="RFID UID string"
-export function getUID(): string {
-    serial.setRxBufferSize(100);
-    let uidBuffer: number[] = [];
+//% blockId="getVoltageAndCurrent" block="Get Voltage and Current Data"
+export function getVoltageAndCurrent(): number[] {
+    let table: number[] = [0, 0, 0, 0];
 
-    // Assuming you have a function to receive data into uidBuffer
-    receiveData(uidBuffer);
+    // Assuming you have a function to receive data
+    receiveVoltageAndCurrentData(table);
 
-    // Convert the array of numbers to a string and return it
-    return uidBuffer.map(num => String.fromCharCode(num)).join('');
+    return table;
 }
 
-// Example function for receiving data into uidBuffer
-function receiveData(buffer: number[]): void {
+function receiveVoltageAndCurrentData(table: number[]): void {
     while (true) {
-        let data = serial.readBuffer(1);
-        if (data.length > 0) {
-            buffer.push(data[0]);
+        let buffer = serial.readBuffer(4); // Assuming you are reading 4 bytes of data
+        if (buffer.length >= 4) {
+            // Fill the table array with the received data
+            table[0] = buffer[0];
+            table[1] = buffer[1];
+            table[2] = buffer[2];
+            table[3] = buffer[3];
+
+            // Add your exit condition based on the data you receive.
+            break;
         }
-        // Add your exit condition based on the data you receive.
     }
 }
+
 
 }
