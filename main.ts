@@ -2,7 +2,7 @@
 //% weight=0 color=#3CB371 icon="\uf2db" block="gigotools" groups='["Motor", "Ultrasound", "RGB LED", "Color Sensor"]'
 enum PingUnit {
     //% block="cm"
-    Centimeters, 
+    Centimeters,
     //% block="μs"
     MicroSeconds,
     //% block="inches"
@@ -37,7 +37,7 @@ enum RGBLedColors {
     Purple = 0xFF00FF,
     //% block=white
     White = 0xFFFFFF
-   
+
 }
 namespace Gigotools {
 
@@ -46,13 +46,13 @@ namespace Gigotools {
     ////////////////////////////////
 
 
-   /**馬達通道定義註解
-   A(1,2)
-   B(8,13)
-   C(14,15)
-   D(16,0)
-   I2C(20,19)
-   */
+    /**馬達通道定義註解
+    A(1,2)
+    B(8,13)
+    C(14,15)
+    D(16,0)
+    I2C(20,19)
+    */
     //% blockId=DDMmotor2 block="motor channel %MotorPin|speed (0~100) %MSpeedValue|rotation direction(0~1) %McontrolValue" blockExternalInputs=false
     //% McontrolValue.min=0 McontrolValue.max=1 
     //% MSpeedValue.min=0 MSpeedValue.max=100   
@@ -79,8 +79,8 @@ namespace Gigotools {
 
         }
     }
-  /**馬達腳位自行宣告
-    */
+    /**馬達腳位自行宣告
+      */
     //% blockId=DDMmotor block="speed pin %MSpeedPin|speed (0~255) %MSpeedValue|direction pin %McontrolPin|rotation direction(0~1) %McontrolValue" blockExternalInputs=false
     //% McontrolValue.min=0 McontrolValue.max=1 
     //% MSpeedValue.min=0 MSpeedValue.max=255   
@@ -142,10 +142,10 @@ namespace Gigotools {
         let RGBLED = new HaloHd();
         RGBLED.buf = pins.createBuffer(1 * 3);
         RGBLED.start = 0;
-        RGBLED._length = 1;/*LED數量*/ 
+        RGBLED._length = 1;/*LED數量*/
         RGBLED.RGBLED_set_brightness(128)
         RGBLED.pin = pin;
-        pins.digitalWritePin(RGBLED.pin ,pin);
+        pins.digitalWritePin(RGBLED.pin, pin);
         return RGBLED;
     }
     export class HaloHd {
@@ -156,15 +156,15 @@ namespace Gigotools {
         _length: number;
 
 
-        
 
-    
+
+
         /**
          * Shows whole ZIP Halo display as a given color (range 0-255 for r, g, b). 
          * @param rgb RGB color of the LED
          */
         //% subcategory="Add on pack"
-         //% group="RGB LED"
+        //% group="RGB LED"
         //% block="%RGBLED|show color %rgb=RGBLED_colors" 
         //% weight=99 blockGap=8
         RGBLED_set_color(rgb: number) {
@@ -173,7 +173,7 @@ namespace Gigotools {
             this.show();
         }
 
-        
+
 
         /**
          * Send all the changes to the ZIP Halo display.
@@ -257,7 +257,7 @@ namespace Gigotools {
         }
     }
 
-    
+
 
     /**
      * Converts wavelength value to red, green, blue channels
@@ -419,11 +419,11 @@ namespace Gigotools {
     ////////////////////////////////
     //          顏色感測器        //
     ////////////////////////////////
-//% weight=12
-//% block="initialize color sensor"
-//% subcategory="Add on pack" 
-//% group="Color Sensor"
-export function ColorSensorinit(): void {
+    //% weight=12
+    //% block="color sensor initialization"
+    //% subcategory="Add on pack" 
+    //% group="Color Sensor"
+    export function ColorSensorinit(): void {
         pins.i2cWriteNumber(41, 33276, NumberFormat.UInt16BE, false)
         pins.i2cWriteNumber(41, 32771, NumberFormat.UInt16BE, false)
     }
@@ -433,7 +433,7 @@ export function ColorSensorinit(): void {
     //% weight=12
     //% block="color sensor read color"
     //% subcategory="Add on pack"
-     //% group="Color Sensor"
+    //% group="Color Sensor"
     export function ColorSensorReadColor(): void {
         pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
 
@@ -462,8 +462,8 @@ export function ColorSensorinit(): void {
     }
     //% weight=12
     //% block="color sensor read RGB %channel |channel"
-     //% subcategory="Add on pack"
-      //% group="Color Sensor"
+    //% subcategory="Add on pack"
+    //% group="Color Sensor"
     export function ColorSensorRead(channel: Channel = 1): number {
         pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
 
@@ -510,11 +510,11 @@ export function ColorSensorinit(): void {
         Custom3 = 8
     }
 
-    let ReadRedColor = [130, 144, 140]
-    let ReadGreenColor = [107, 155, 142]
-    let ReadBlueColor = [104, 150, 152]
-    let ReadYellowColor = [159, 175, 149]
-    let ReadPurpleColor = [110, 144, 144]
+    let ReadRedColor = [0, 0, 0]
+    let ReadGreenColor = [0, 0, 0]
+    let ReadBlueColor = [0, 0, 0]
+    let ReadYellowColor = [0, 0, 0]
+    let ReadPurpleColor = [0, 0, 0]
     let ReadCustom1Color = [0, 0, 0]
     let ReadCustom2Color = [0, 0, 0]
     let ReadCustom3Color = [0, 0, 0]
@@ -522,7 +522,7 @@ export function ColorSensorinit(): void {
     //% weight=12
     //% block="color sensor record %colorpart |"
     //% subcategory="Add on pack"
-     //% group="Color Sensor"
+    //% group="Color Sensor"
     export function ColorSensorRecord(colorpart: ColorPart = 1): void {
         pins.i2cWriteNumber(41, 178, NumberFormat.Int8LE, false)
 
@@ -564,16 +564,31 @@ export function ColorSensorinit(): void {
                 break;
         }
     }
-     let colorright = false
-    let forkrange = 10
-    //% weight=12
-    //% block="read color equal to %colorpart |"
+    let WriteRedColor = [0, 0, 0]
+    let WriteGreenColor = [0, 0, 0]
+    let WriteBlueColor = [0, 0, 0]
+    let WriteYellowColor = [0, 0, 0]
+    let WritePurpleColor = [0, 0, 0]
+    let WriteCustom1Color = [0, 0, 0]
+    let WriteCustom2Color = [0, 0, 0]
+    let WriteCustom3Color = [0, 0, 0]
+    let colorright = false
+    let forkrange = 5
+    //% weight=99 blockGap=8
+    //% block="read R %WriteRed|and G %WriteGreen|and B %WriteBlue equal to %colorpart|"
+    //% WriteRed.min=0 WriteRed.max=255
+    //% WriteGreen.min=0 WriteGreen.max=255
+    //% WriteBlue.min=0 WriteBlue.max=255
     //% subcategory="Add on pack"
-     //% group="Color Sensor"
-    export function ReadColorEqual(colorpart: ColorPart = 1): boolean {
+    //% group="Color Sensor"
+    export function ReadColorEqual(WriteRed: number, WriteGreen: number, WriteBlue: number, colorpart: ColorPart = 1): boolean {
         switch (colorpart) {
             case 1:
+                WriteRedColor = [WriteRed, WriteGreen, WriteBlue];
                 if ((Math.abs(ReadRedColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadRedColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadRedColor[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else if ((Math.abs(WriteRedColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(WriteRedColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(WriteRedColor[2] - nowReadColor[2]) < forkrange)) {
                     colorright = true
                 }
                 else {
@@ -581,7 +596,11 @@ export function ColorSensorinit(): void {
                 }
                 break;
             case 2:
+                WriteGreenColor = [WriteRed, WriteGreen, WriteBlue];
                 if ((Math.abs(ReadGreenColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadGreenColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadGreenColor[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else if ((Math.abs(WriteGreenColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(WriteGreenColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(WriteGreenColor[2] - nowReadColor[2]) < forkrange)) {
                     colorright = true
                 }
                 else {
@@ -589,7 +608,11 @@ export function ColorSensorinit(): void {
                 }
                 break;
             case 3:
+                WriteBlueColor = [WriteRed, WriteGreen, WriteBlue];
                 if ((Math.abs(ReadBlueColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadBlueColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadBlueColor[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else if ((Math.abs(WriteBlueColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(WriteBlueColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(WriteBlueColor[2] - nowReadColor[2]) < forkrange)) {
                     colorright = true
                 }
                 else {
@@ -597,16 +620,24 @@ export function ColorSensorinit(): void {
                 }
                 break;
             case 4:
+                WriteYellowColor = [WriteRed, WriteGreen, WriteBlue];
                 if ((Math.abs(ReadYellowColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadYellowColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadYellowColor[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else if ((Math.abs(WriteYellowColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(WriteYellowColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(WriteYellowColor[2] - nowReadColor[2]) < forkrange)) {
                     colorright = true
                 }
                 else {
                     colorright = false
                 }
                 break;
-          
+
             case 5:
+                WritePurpleColor = [WriteRed, WriteGreen, WriteBlue];
                 if ((Math.abs(ReadPurpleColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadPurpleColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadPurpleColor[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else if ((Math.abs(WritePurpleColor[0] - nowReadColor[0]) < forkrange) && (Math.abs(WritePurpleColor[1] - nowReadColor[1]) < forkrange) && (Math.abs(WritePurpleColor[2] - nowReadColor[2]) < forkrange)) {
                     colorright = true
                 }
                 else {
@@ -614,7 +645,11 @@ export function ColorSensorinit(): void {
                 }
                 break;
             case 6:
+                WriteCustom1Color = [WriteRed, WriteGreen, WriteBlue];
                 if ((Math.abs(ReadCustom1Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadCustom1Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadCustom1Color[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else if ((Math.abs(WriteCustom1Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(WriteCustom1Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(WriteCustom1Color[2] - nowReadColor[2]) < forkrange)) {
                     colorright = true
                 }
                 else {
@@ -622,7 +657,11 @@ export function ColorSensorinit(): void {
                 }
                 break;
             case 7:
+                WriteCustom2Color = [WriteRed, WriteGreen, WriteBlue];
                 if ((Math.abs(ReadCustom2Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadCustom2Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadCustom2Color[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else if ((Math.abs(WriteCustom2Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(WriteCustom2Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(WriteCustom2Color[2] - nowReadColor[2]) < forkrange)) {
                     colorright = true
                 }
                 else {
@@ -630,7 +669,11 @@ export function ColorSensorinit(): void {
                 }
                 break;
             case 8:
+                WriteCustom3Color = [WriteRed, WriteGreen, WriteBlue];
                 if ((Math.abs(ReadCustom3Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(ReadCustom3Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(ReadCustom3Color[2] - nowReadColor[2]) < forkrange)) {
+                    colorright = true
+                }
+                else if ((Math.abs(WriteCustom3Color[0] - nowReadColor[0]) < forkrange) && (Math.abs(WriteCustom3Color[1] - nowReadColor[1]) < forkrange) && (Math.abs(WriteCustom3Color[2] - nowReadColor[2]) < forkrange)) {
                     colorright = true
                 }
                 else {
@@ -645,81 +688,5 @@ export function ColorSensorinit(): void {
             return false
         }
     }
-    ////////////////////////////////
-    //         GEMS      //
-    ////////////////////////////////
-let myRxPin: SerialPin;
-let myTxPin: SerialPin;
-let init: boolean = false;
-
-//% weight=100
-//% blockId="GEMS_setSerial" block="設置 RX 為 P2，波特率 9600"
-export function GEMS_setSerial(): void {
-    myRxPin = SerialPin.P2;
-    myTxPin = SerialPin.P1;  // 假設 TX 被設置為 P1
-    serial.redirect(
-        myRxPin,
-        myTxPin,
-        BaudRate.BaudRate115200
-    );
-    init = true;
-}
-
-//% weight=70
-//% blockId="getVoltage" block="獲取電壓"
-export function getVoltage(): number {
-    let data: number[] = [];
-    receiveData(data);
-
-    // 假設你有一個從數據中提取電壓的函數
-    return extractVoltage(data);
-}
-
-//% weight=60
-//% blockId="getCurrent" block="獲取電流"
-export function getCurrent(): number {
-    let data: number[] = [];
-    receiveData(data);
-
-    // 假設你有一個從數據中提取電流的函數
-    return extractCurrent(data);
-}
-
-function extractVoltage(data: number[]): number {
-    // 從接收到的數據中提取電壓值
-    return (data[1] << 8) | data[0];
-}
-
-function extractCurrent(data: number[]): number {
-    // 從接收到的數據中提取電流值
-    return (data[3] << 8) | data[2];
-}
-
-function receiveData(table: number[]): void {
-    const MAX_ATTEMPTS = 100; // 最大嘗試次數
-    let attempts = 0;
-
-    while (attempts < MAX_ATTEMPTS) {
-        let data = serial.readBuffer(4);
-        
-        if (data.length >= 4) {
-            // 將值存儲到 table 數組中
-            table[0] = data[0];
-            table[1] = data[1];
-            table[2] = data[2];
-            table[3] = data[3];
-
-            // 添加退出循環的條件，例如根據接收到的數據
-            if (table[0] != 0 && table[1] != 0 && table[2] != 0 && table[3] != 0) {
-                break;
-            }
-        }
-
-        basic.pause(10); // 暫停一小段時間，避免快速迴圈
-        attempts++;
-    }
-}
 
 }
-
-
