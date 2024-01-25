@@ -32,5 +32,6 @@
     "Gigotools.ColorPart.Custom2|block": "自定2",
     "Gigotools.ColorPart.Custom3|block": "自定3",
     "Gigotools.ColorSensorRecord|block": "颜色感测器记录 %colorpart |数值",
+    "Gigotools.ReadColorEqual|block": "读取红 %WriteRed|和 绿 %WriteGreen|和 蓝 %WriteBlue等于 %colorpart",
     "Gigotools.ReadColorEqual|block": "读取颜色等于 %colorpart"
 }
