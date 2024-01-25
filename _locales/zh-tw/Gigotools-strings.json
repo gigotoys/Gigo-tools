@@ -33,7 +33,7 @@
     "Gigotools.ColorPart.Custom2|block": "自定2",
     "Gigotools.ColorPart.Custom3|block": "自定3",
     "Gigotools.ColorSensorRecord|block": "顏色感測器紀錄 %colorpart |數值",
-    "Gigotools.ReadColorEqual|block": "讀取顏色等於 %colorpart",
+    "Gigotools.ReadColorEqual|block": "讀取紅 %WriteRed|和 綠 %WriteGreen|和 藍 %WriteBlue等於 %colorpart",
     "{id:group}Motor": "馬達",
     "{id:group}Ultrasonic Sensor": "超音波感測器",
     "{id:group}Color Sensor": "顏色感測器"
