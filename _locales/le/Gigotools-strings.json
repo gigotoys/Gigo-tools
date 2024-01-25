@@ -31,6 +31,6 @@
     "Gigotools.ColorPart.Custom1|block": "Προσαρμοσμένο 1",
     "Gigotools.ColorPart.Custom2|block": "Προσαρμοσμένο 2",
     "Gigotools.ColorPart.Custom3|block": "Προσαρμοσμένο 3",
-    "Gigotools.ColorSensorRecord|block": "Εγγραφή αισθητήρα χρώματος %colorpart |Τιμή",
+    "Gigotools.ColorSensorRecord|block": "Εγγραφή κόκκινου %WriteRed|και πράσινου %WriteGreen|και μπλε %WriteBlue ισούται με %colorpart",
     "Gigotools.ReadColorEqual|block": "Ανάγνωση χρώματος ίσο με %colorpart"
 }
